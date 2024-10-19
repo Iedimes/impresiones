@@ -140,7 +140,7 @@ class AmaController extends Controller
         $templateProcessor->setValue('CAMPO56', date('d/m/Y'));
         //$templateProcessor->setValue('CAMPO12', $postulante->CerPosCod);
         \QrCode::format('png')->size(110)->margin(0)->generate($num,storage_path("/ama/impresion/".trim($postulante->CerNro)."png"));
-        $templateProcessor->setImg('IMAGEN', array(
+        $templateProcessor->setImageValue('IMAGEN', array(
             'src'  => storage_path("/ama/impresion/".trim($postulante->CerNro)."png")//,
             //'size' => array( 130, 120 ) //px
         ));
