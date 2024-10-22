@@ -11,6 +11,7 @@ use App\Persona;
 use App\ManLote;
 use Illuminate\Support\Facades\DB;
 use ZipArchive;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ChetapyiController extends Controller
 {
@@ -230,11 +231,19 @@ class ChetapyiController extends Controller
         $templateProcessor->setValue('CAMPO10', date('d/m/Y', strtotime($postulante->CerFeRe)));
         $templateProcessor->setValue('CAMPO56', date('d/m/Y'));
         //$templateProcessor->setValue('CAMPO12', $postulante->CerPosCod);
-        \QrCode::format('png')->size(110)->margin(0)->generate($num,storage_path("/chetapyi/impresion/".$CerNro."png"));
-        $templateProcessor->setImg('IMAGEN', array(
-            'src'  => storage_path("/chetapyi/impresion/".$CerNro."png")//,
-            //'size' => array( 130, 120 ) //px
-        ));
+          // Construir la URL completa
+          $num = env('APP_URL') . '/verificacion/' . $postulante->CerPin;
+
+          // Generar el código QR
+          QrCode::format('png')->size(200)->margin(0)->generate($num, storage_path("/chetapyi/impresion/".$CerNro.".png"));
+
+          // Insertar la imagen del código QR en el documento
+          $templateProcessor->setImageValue('IMAGEN', array(
+              'src' => storage_path("/chetapyi/impresion/".$CerNro.".png"),
+              // 'size' => array( 150, 140 ) //px
+          ));
+
+
         $templateProcessor->saveAs(storage_path("/chetapyi/impresion/".$CerNro.".docx"));
         $word = new \COM("Word.Application") or die ("Could not initialise Object.");
         // set it to 1 to see the MS Word window (the actual opening of the document)
