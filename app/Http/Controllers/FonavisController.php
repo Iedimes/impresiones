@@ -258,7 +258,7 @@ class FonavisController extends Controller
         $num = env('APP_URL') . '/verificacion/' . $postulante->CerPin;
 
         // Generar el código QR
-        QrCode::format('png')->size(200)->margin(0)->generate($num, storage_path("/fonavis/impresion/".$CerNro.".png"));
+        QrCode::format('png')->size(110)->margin(0)->generate($num, storage_path("/fonavis/impresion/".$CerNro.".png"));
 
         // Insertar la imagen del código QR en el documento
         $templateProcessor->setImageValue('IMAGEN', array(
@@ -294,69 +294,49 @@ class FonavisController extends Controller
     }
 
     public function generateMasivo(Request $request)
-    {
-        try {
-            $s = $request->input('dateid');
-            $dt = new \DateTime($s);
-            $date = $dt->format('Y-d-m H:i:s.v');
+{
+    $s = $request->input('dateid');
+    $dt = new \DateTime($s);
+    $date = $dt->format('Y-d-m H:i:s.v');
 
-            $projects = Subsidio::where('CerProg', $request->input('progid'))
-                ->where('CerResNro','=', $request->input('resid'))
-                ->where('CerFeRe','=', $date)
-                ->orderBy(DB::raw('SUBSTRING(CerNro, 4,  15)'), 'asc')
-                ->paginate(15);
+    $projects = Subsidio::where('CerProg', $request->input('progid'))
+        ->where('CerResNro', '=', $request->input('resid'))
+        ->where('CerFeRe', '=', $date)
+        ->orderBy(DB::raw('SUBSTRING(CerNro, 4,  15)'), 'asc')
+        ->paginate(15);
 
-            $time = time();
-            $name = 'FONAVIS-' . $request->input('resid') . '-' . $request->input('dateid') . '-p' . $request->input('page') . '-' . $time . '.zip';
-            $zipper = new \Chumper\Zipper\Zipper;
+    $time = time();
+    $name = 'FONAVIS' . '-' . $request->input('resid') . '-' . $request->input('dateid') . '-p' . $request->input('page') . '-' . $time . '.zip';
+    $zipper = new \Chumper\Zipper\Zipper;
 
-            $ext = ($request->input('idtipo') == 1) ? "CS" : "RC";
-
-            // Crear el archivo zip
-            $zipper->make(storage_path("/fonavis/impresion/" . $name));
-
-            foreach ($projects as $key => $value) {
-                // Log el CerNro y CerPosCod
-                \Log::info("Procesando el proyecto: " . $value->CerNro);
-                \Log::info("CerPosCod: " . $value->CerPosCod);
-
-                // Verifica y limpia los campos que puedan tener caracteres no válidos
-                $cerNro = mb_convert_encoding($value->CerNro, 'UTF-8', 'UTF-8');
-                $cerPosCod = mb_convert_encoding($value->CerPosCod, 'UTF-8', 'UTF-8');
-
-                // Generar el documento
-                $this->generateDocxMulti($cerNro, $request->input('idtipo'));
-
-                // Crear el nombre del archivo PDF
-                $pdfFilePath = storage_path("/fonavis/impresion/" . $ext . substr(rtrim($cerNro), 5) . '_' . rtrim($cerPosCod) . ".pdf");
-
-                // Registra el nombre del archivo antes de intentar agregarlo al ZIP
-                \Log::info("Intentando agregar el archivo: " . $pdfFilePath);
-
-                // Añadir el archivo PDF al zip
-                if (file_exists($pdfFilePath)) {
-                    $zipper->folder('')->add($pdfFilePath);
-                } else {
-                    \Log::warning("El archivo no existe: " . $pdfFilePath);
-                }
-            }
-
-            // Cerrar el zip
-            $zipper->close();
-
-            // Retornar el archivo para descargar
-            return response()->download(storage_path("/fonavis/impresion/" . $name));
-
-        } catch (\Exception $e) {
-            // Captura el error y devuelve un mensaje de error detallado
-            return response()->json([
-                'error' => 'Error al generar el archivo zip: ' . $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ], 500);
-        }
+    if ($request->input('idtipo') == 1) {
+        $ext = "CS";
+    } else {
+        $ext = "RC";
     }
 
+    try {
+        // Verifica que el directorio sea escribible
+        $zipPath = storage_path("/fonavis/impresion/" . $name);
+        if (!is_writable(dirname($zipPath))) {
+            throw new \Exception('El directorio no es escribible.');
+        }
 
+        $zipper->make($zipPath)->folder('');
+
+        foreach ($projects as $value) {
+            $this->generateDocxMulti($value->CerNro, $request->input('idtipo'));
+            $zipper->add(storage_path("/fonavis/impresion/" . $ext . substr(rtrim($value->CerNro), 5) . '_' . rtrim($value->CerPosCod) . ".pdf"));
+        }
+
+        $zipper->close();
+
+        return response()->download($zipPath);
+    } catch (\Exception $e) {
+        \Log::error("Error al generar el ZIP: " . $e->getMessage());
+        return response()->json(['error' => 'Error al crear el archivo ZIP.'], 500);
+    }
+}
 
 
 
@@ -559,17 +539,18 @@ class FonavisController extends Controller
         $templateProcessor->setValue('CAMPO10', date('d/m/Y', strtotime($postulante->CerFeRe)));
         $templateProcessor->setValue('CAMPO56', date('d/m/Y'));
         //$templateProcessor->setValue('CAMPO12', $postulante->CerPosCod);
-        // Construir la URL completa
-        $num = env('APP_URL') . '/verificacion/' . $postulante->CerPin;
+       // Construir la URL completa
+       $num = env('APP_URL') . '/verificacion/' . $postulante->CerPin;
 
-        // Generar el código QR
-        QrCode::format('png')->size(200)->margin(0)->generate($num, storage_path("/fonavis/impresion/".$CerNro.".png"));
+       // Generar el código QR
+       QrCode::format('png')->size(110)->margin(0)->generate($num, storage_path("/fonavis/impresion/".$CerNro.".png"));
 
-        // Insertar la imagen del código QR en el documento
-        $templateProcessor->setImageValue('IMAGEN', array(
-            'src' => storage_path("/fonavis/impresion/".$CerNro.".png"),
-        ));
+       // Insertar la imagen del código QR en el documento
+       $templateProcessor->setImageValue('IMAGEN', array(
+           'src' => storage_path("/fonavis/impresion/".$CerNro.".png"),
+       ));
 
+        $templateProcessor->saveAs(storage_path("/fonavis/impresion/".$CerNro.".docx"));
         $word = new \COM("Word.Application") or die ("Could not initialise Object.");
         // set it to 1 to see the MS Word window (the actual opening of the document)
         $word->Visible = 0;
