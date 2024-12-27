@@ -255,7 +255,7 @@ class FonavisController extends Controller
 
 
        // Construir la URL completa
-        $num = env('APP_URL') . '/verificacion/' . $postulante->CerPin;
+        $num = env('APP_URL') .'/verificacion/'. $postulante->CerPin;
 
         // Generar el código QR
         QrCode::format('png')->size(110)->margin(0)->generate($num, storage_path("/fonavis/impresion/".$CerNro.".png"));

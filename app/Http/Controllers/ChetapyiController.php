@@ -232,7 +232,7 @@ class ChetapyiController extends Controller
         $templateProcessor->setValue('CAMPO56', date('d/m/Y'));
         //$templateProcessor->setValue('CAMPO12', $postulante->CerPosCod);
           // Construir la URL completa
-          $num = env('APP_URL') . '/verificacion/' . $postulante->CerPin;
+          $num = env('APP_URL') .'/verificacion/'. $postulante->CerPin;
 
           // Generar el código QR
           QrCode::format('png')->size(200)->margin(0)->generate($num, storage_path("/chetapyi/impresion/".$CerNro.".png"));
