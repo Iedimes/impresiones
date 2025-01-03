@@ -83,6 +83,30 @@ class ChetapyiController extends Controller
             $postulante->save();
         }
 
+        $proyecto=trim($postulante->CerPryCod);
+
+        if ($proyecto == 'K-MR-CT-001') {
+            $cabecera = 'LEY N° 6275 – QUE APRUEBA EL MEMORANDO DE ENTENDIMIENTO SOBRE
+            LA COOPERACION BILATERAL ENTRE EL GOBIERNO DE LA REPUBLICA DEL PARAGUAY Y
+            EL GOBIERNO DE LA REPUBLICA DE CHINA (TAIWÁN)';
+
+            // Eliminar saltos de línea y normalizar espacios
+            $cabecera = preg_replace('/\s+/', ' ', $cabecera);
+
+            // Usar setValue para pasar el texto limpio al marcador
+            $templateProcessor->setValue('CAMPO111', $cabecera);
+
+        } else {
+            $cabecera = 'LEY N° 5175/14 – APROBACIÓN DE LA DONACIÓN DE LA REPUBLICA
+            DE CHINA (TAIWÁN)';
+
+            // Eliminar saltos de línea y normalizar espacios
+            $cabecera = preg_replace('/\s+/', ' ', $cabecera);
+
+            // Usar setValue para pasar el texto limpio al marcador
+            $templateProcessor->setValue('CAMPO111', $cabecera);
+        }
+
         if ($titular->PerSexo == 'M') {
             $templateProcessor->setValue('CAMPO11', ' al Señor '.rtrim($postulante->CerposNom));
         } else {
