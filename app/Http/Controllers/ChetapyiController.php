@@ -94,7 +94,7 @@ class ChetapyiController extends Controller
             $cabecera = preg_replace('/\s+/', ' ', $cabecera);
 
             // Usar setValue para pasar el texto limpio al marcador
-            $templateProcessor->setValue('CAMPO111', $cabecera);
+            $templateProcessor->setValue('CAMPO1111', $cabecera);
 
         } else {
             $cabecera = 'LEY N° 5175/14 – APROBACIÓN DE LA DONACIÓN DE LA REPUBLICA
@@ -104,7 +104,7 @@ class ChetapyiController extends Controller
             $cabecera = preg_replace('/\s+/', ' ', $cabecera);
 
             // Usar setValue para pasar el texto limpio al marcador
-            $templateProcessor->setValue('CAMPO111', $cabecera);
+            $templateProcessor->setValue('CAMPO1111', $cabecera);
         }
 
         if ($titular->PerSexo == 'M') {
