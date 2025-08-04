@@ -114,22 +114,22 @@ class FonavisController extends Controller
 
 
 
-        if($postulante->CerMod == "CV"){
+        if ($postulante->CerMod === "CV") {
+            $templateProcessor->setValue('CAMPO23', '');
+        } else {
+            $report = Grupo::where('NucCod', $postulante->CerNucCod)
+                ->where('GnuCod', $postulante->CerGnuCod)
+                ->first();
 
-        }else{
+            $gnunom = $report->GnuNom ?? '';
 
-            $report = Grupo::where('NucCod', '=', $postulante->CerNucCod)
-            ->where('GnuCod', '=', $postulante->CerGnuCod)
-            ->first();
-            if (isset($report->GnuNom)) {
-                $templateProcessor->setValue('CAMPO23', $report->GnuNom);
-            } else {
-                $templateProcessor->setValue('CAMPO23', '');
-            }
+            // Reemplazar << y >> si existen
+            $gnunom = str_replace(['<<', '>>'], ['‹‹', '››'], $gnunom);
 
-
-
+            $templateProcessor->setValue('CAMPO23', $gnunom);
         }
+
+
 
         if ($postulante->CerNucNom == 0) {
             $templateProcessor->setValue('CAMPO73', '');
@@ -414,14 +414,20 @@ class FonavisController extends Controller
         }
 
 
-        $report = Grupo::where('NucCod', '=', $postulante->CerNucCod)
-            ->where('GnuCod', '=', $postulante->CerGnuCod)
+        $report = Grupo::where('NucCod', $postulante->CerNucCod)
+            ->where('GnuCod', $postulante->CerGnuCod)
             ->first();
-            if (isset($report->GnuNom)) {
-                $templateProcessor->setValue('CAMPO23', $report->GnuNom);
-            } else {
-                $templateProcessor->setValue('CAMPO23', '');
-            }
+
+        $gnunom = $report->GnuNom ?? '';
+
+        // Reemplazar << y >> por versiones seguras si hay contenido
+        if (!empty($gnunom)) {
+            $gnunom = str_replace(['<<', '>>'], ['‹‹', '››'], $gnunom);
+        }
+
+        $templateProcessor->setValue('CAMPO23', $gnunom);
+
+
 
         if ($postulante->CerNucNom == 0) {
             $templateProcessor->setValue('CAMPO73', '');
