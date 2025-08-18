@@ -10,30 +10,34 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
     return view('auth.login');
 });
 
+//Auth::routes();
 Auth::routes([
     'reset' => false,
     'verify' => false,
     'register' => false,
-]);
+ ]);
+ Route::get('/home', 'HomeController@index')->name('home');
 
-// Públicas
-Route::get('/verificacion/{id}/', 'HomeController@verificacion');
+ Route::resource('photos', 'PhotoController');
+ Route::get('pre/{cedula}', 'PhotoController@index');
 
-// Protegidas
-Route::middleware('auth')->group(function () {
-    Route::get('/home', 'HomeController@index')->name('home');
+ //Route::get('/photos', 'PhotoController@index')->name('home');
 
-    Route::resource('photos', 'PhotoController');
-    Route::get('pre/{cedula}', 'PhotoController@index');
+ Route::post('/filtros', 'HomeController@index');
+ Route::get('/filtros', 'HomeController@index');
 
-    Route::post('/filtros', 'HomeController@index');
-    Route::get('/filtros', 'HomeController@index');
+ Route::get('generate/{id}/{idtipo}', 'FileController@imprimir');
 
-    Route::get('generate/{id}/{idtipo}', 'FileController@imprimir');
-    Route::get('previa/{id}/', 'HomeController@previaimpresion');
-    Route::get('generatemasivo/', 'FonavisController@generateMasivo');
-});
+ Route::get('previa/{id}/', 'HomeController@previaimpresion');
+
+ Route::get('generatemasivo/', 'FonavisController@generateMasivo');
+
+ Route::get('/verificacion/{id}/', 'HomeController@verificacion');
+
+
+//Route::get('/home/{progid}/{resid}/{dateid}/', 'HomeController@index')->name('home');
