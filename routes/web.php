@@ -37,7 +37,8 @@ Auth::routes([
 
  Route::get('generatemasivo/', 'FonavisController@generateMasivo');
 
- Route::get('/verificacion/{id}/', 'HomeController@verificacion');
+ Route::get('/verificacion/{id}/', 'HomeController@verificacion')->withoutMiddleware('auth');
+
 
 
 //Route::get('/home/{progid}/{resid}/{dateid}/', 'HomeController@index')->name('home');
