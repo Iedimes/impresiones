@@ -211,7 +211,7 @@ class VyarendaController extends Controller
         if ($postulante->CerDptoId == 0) {
 
         } else {
-            $templateProcessor->setValue('CAMPO43', $depto->DptoNom);
+            $templateProcessor->setValue('CAMPO43', trim($depto->DptoNom));
         }
 
         //$ubicacion = ManLote::find($postulante->CerPosCod,$postulante->CerPryCod);
