@@ -155,7 +155,7 @@ class VyarendaController extends Controller
         $templateProcessor->setValue('CAMPO18', $postulante->CerReLla);
         $templateProcessor->setValue('CAMPO30', date('d/m/Y', strtotime($postulante->CerReLFe)));
 
-        $templateProcessor->setValue('CAMPO25', $postulante->CerIdent);
+        $templateProcessor->setValue('CAMPO25', trim($postulante->CerIdent));
         $templateProcessor->setValue('CAMPO26', $postulante->CerNro);
         $cedula = number_format((int)$postulante->CerPosCod,0,'.','.');
         if ($postulante->CerPosCod <= 150000 ) {
