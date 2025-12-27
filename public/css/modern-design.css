@@ -1,0 +1,322 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+    --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    --surface-card: #ffffff;
+    --background: #f8fafc;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-radius: 12px;
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+body {
+    font-family: 'Outfit', sans-serif !important;
+    background-color: var(--background) !important;
+    color: var(--text-primary);
+    font-size: 1.25rem !important;
+    /* Even larger base font */
+}
+
+/* Customizing AdminLTE Layout */
+.content-wrapper {
+    background-color: var(--background) !important;
+    padding: 1.5rem !important;
+}
+
+.main-header {
+    border-bottom: none !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.main-sidebar {
+    box-shadow: var(--shadow-lg) !important;
+    border-right: none !important;
+}
+
+/* Glassmorphism effect for sidebar */
+.sidebar-dark-primary {
+    background: #0f172a !important;
+    /* Night sky color */
+}
+
+/* Card Styling */
+.card,
+.box {
+    border: none !important;
+    border-radius: var(--border-radius) !important;
+    box-shadow: var(--shadow-md) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 2rem !important;
+}
+
+.card:hover,
+.box:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.card-header,
+.box-header {
+    background: transparent !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    padding: 1.25rem 1.5rem !important;
+}
+
+.card-body,
+.box-body {
+    padding: 1.5rem !important;
+}
+
+/* Modern Inputs */
+.form-control {
+    border-radius: 8px !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 0.6rem 1rem !important;
+    height: auto !important;
+    transition: all 0.2s ease !important;
+}
+
+.form-control:focus {
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+}
+
+label {
+    font-weight: 500 !important;
+    color: var(--text-secondary) !important;
+    margin-bottom: 0.5rem !important;
+    font-size: 0.9rem !important;
+}
+
+/* Buttons Transformation */
+.btn {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    padding: 0.6rem 1.5rem !important;
+    text-transform: none !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: none !important;
+    letter-spacing: 0.025em !important;
+}
+
+.btn-primary {
+    background: var(--primary-gradient) !important;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2) !important;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4) !important;
+    transform: translateY(-1px);
+}
+
+.btn-success {
+    background: var(--success-gradient) !important;
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2) !important;
+}
+
+.btn-info {
+    background: var(--secondary-gradient) !important;
+    color: white !important;
+}
+
+.btn-danger {
+    background: var(--danger-gradient) !important;
+}
+
+/* Table Design */
+.table {
+    border-collapse: separate !important;
+    border-spacing: 0 0px !important;
+}
+
+.table thead th {
+    background-color: #f8fafc !important;
+    border-top: none !important;
+    border-bottom: 2px solid #f1f5f9 !important;
+    color: var(--text-secondary) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 0.85rem !important;
+    /* Slightly larger headers */
+    letter-spacing: 0.05em !important;
+    padding: 1rem !important;
+}
+
+.table tbody td {
+    padding: 1.25rem 1rem !important;
+    vertical-align: middle !important;
+    border-top: 1px solid #f1f5f9 !important;
+    font-size: 1.2rem !important;
+    /* Even larger table text */
+}
+
+/* Invoice / Preview Page Styles */
+.invoice {
+    background: var(--surface-card) !important;
+    border-radius: var(--border-radius) !important;
+    box-shadow: var(--shadow-lg) !important;
+    padding: 2.5rem !important;
+    border: none !important;
+    margin-top: 1rem;
+}
+
+.invoice-info {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+    background: #f8fafc;
+    padding: 2rem !important;
+    border-radius: 12px;
+}
+
+.invoice-col strong {
+    font-size: 1.3rem !important;
+    color: #4338ca;
+    display: block;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+}
+
+.invoice address {
+    font-size: 1.15rem !important;
+    line-height: 1.8;
+}
+
+.page-header {
+    border-bottom: 2px solid #f1f5f9 !important;
+    padding-bottom: 1rem !important;
+    color: var(--text-primary) !important;
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f5f9 !important;
+}
+
+/* Customizing the logo area */
+.brand-link {
+    background: #1e293b !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 1rem !important;
+}
+
+.brand-text {
+    font-weight: 600 !important;
+    letter-spacing: -0.025em !important;
+}
+
+/* Pagination Styling */
+.pagination .page-item.active .page-link {
+    background: var(--primary-gradient) !important;
+    border: none !important;
+}
+
+.pagination .page-link {
+    border-radius: 6px !important;
+    margin: 0 2px !important;
+    border: none !important;
+    color: var(--text-secondary) !important;
+    font-weight: 500 !important;
+}
+
+/* Micro-animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-wrapper>section>.container-fluid {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Search bar area improvements */
+.input-group-addon {
+    background-color: transparent !important;
+    border-right: none !important;
+    color: var(--text-secondary) !important;
+}
+
+/* Status Badges */
+.fa-check {
+    background: #ecfdf5;
+    color: #059669 !important;
+    padding: 6px;
+    border-radius: 50%;
+    font-size: 0.8rem !important;
+    width: 24px;
+    height: 24px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.fa-warning {
+    background: #fffbeb;
+    color: #d97706 !important;
+    padding: 6px;
+    border-radius: 50%;
+    font-size: 0.8rem !important;
+    width: 24px;
+    height: 24px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Row entrance animation */
+tbody tr {
+    animation: fadeIn 0.3s ease-out forwards;
+    opacity: 0;
+}
+
+tbody tr:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+tbody tr:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+tbody tr:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+tbody tr:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+tbody tr:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

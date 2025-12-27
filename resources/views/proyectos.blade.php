@@ -1,5 +1,9 @@
-<div class="box box-primary">
-    <div class="box-body">
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/modern-design.css') }}">
+@stop
+
+<div class="card card-primary card-outline">
+    <div class="card-body">
         <div class="row">
             <form action="/filtros" method="post">
                 {{ csrf_field() }}
@@ -8,23 +12,36 @@
                         <label>Programa</label>
                         <select id="progid" name="progid" class="form-control">
                             <option value="0">Seleccione un Programa</option>
-                            <option value="1" {{ old('progid', isset($progid) ? $progid : '') == '1' ? 'selected' : '' }}>
+                            <option value="1"
+                                {{ old('progid', isset($progid) ? $progid : '') == '1' ? 'selected' : '' }}>
                                 FONAVIS</option>
-                            <option value="2" {{ old('progid', isset($progid) ? $progid : '') == '2' ? 'selected' : '' }}>
+                            <option value="2"
+                                {{ old('progid', isset($progid) ? $progid : '') == '2' ? 'selected' : '' }}>
                                 VYA RENDA</option>
-                            <option value="3" {{ old('progid', isset($progid) ? $progid : '') == '3' ? 'selected' : '' }}>
+                            <option value="3"
+                                {{ old('progid', isset($progid) ? $progid : '') == '3' ? 'selected' : '' }}>
                                 CHE TAPYI</option>
-                            <option value="4" {{ old('progid', isset($progid) ? $progid : '') == '4' ? 'selected' : '' }}>
+                            <option value="4"
+                                {{ old('progid', isset($progid) ? $progid : '') == '4' ? 'selected' : '' }}>
                                 SEMBRANDO</option>
-                            <option value="5" {{ old('progid', isset($progid) ? $progid : '') == '5' ? 'selected' : '' }}>
+                            <option value="5"
+                                {{ old('progid', isset($progid) ? $progid : '') == '5' ? 'selected' : '' }}>
                                 EBY</option>
-                            <option value="6" {{ old('progid', isset($progid) ? $progid : '') == '6' ? 'selected' : '' }}>
+                            <option value="6"
+                                {{ old('progid', isset($progid) ? $progid : '') == '6' ? 'selected' : '' }}>
                                 AMA</option>
-                            <option value="7" {{ old('progid', isset($progid) ? $progid : '') == '7' ? 'selected' : '' }}>
+                            <option value="7"
+                                {{ old('progid', isset($progid) ? $progid : '') == '7' ? 'selected' : '' }}>
                                 SAN FRANCISCO</option>
                         </select>
                     </div>
-                    <h4><strong>Total: {{ $projects->total() }}</strong></h4>
+                    <div class="mt-2">
+                        <span class="badge badge-info p-2"
+                            style="background-color: #6366f1; color: white; border-radius: 6px; font-size: 1.1rem; font-weight: 500;">
+                            <i class="fa fa-layer-group"></i> Total:
+                            {{ number_format($projects->total(), 0, '.', '.') }}
+                        </span>
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
@@ -40,8 +57,8 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ old('dateid', isset($dateid) ? $dateid : '') }}" name="dateid"
-                                id="dateid" class="form-control date" placeholder="Ingrese Fecha">
+                            <input type="text" value="{{ old('dateid', isset($dateid) ? $dateid : '') }}"
+                                name="dateid" id="dateid" class="form-control date" placeholder="Ingrese Fecha">
                         </div>
                     </div>
                 </div>
@@ -51,7 +68,9 @@
                         <input type="text" id="cedula" value="{{ old('cedula', isset($cedula) ? $cedula : '') }}"
                             name="cedula" class="form-control" placeholder="Ingrese cedula">
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Buscar</button>
+                    <button type="submit" class="btn btn-primary pull-right">
+                        <i class="fa fa-search"></i> Buscar
+                    </button>
                 </div>
 
             </form>
@@ -59,8 +78,8 @@
 
     </div>
 </div>
-<div class="box box-info">
-    <div class="box-header with-border">
+<div class="card card-info card-outline">
+    <div class="card-header with-border">
         @role('FONAVIS')
             <a href="{!! action('FonavisController@generateMasivo', [
                 'progid' => $progid,
@@ -86,8 +105,8 @@
         @endrole
         <div class="pull-right">{{ $projects->appends(request()->except('_token'))->links() }}</div>
     </div>
-    <!-- /.box-header -->
-    <div class="box-body">
+    <!-- /.card-header -->
+    <div class="card-body">
         <table id="example" class="table">
             <thead>
                 <tr>
