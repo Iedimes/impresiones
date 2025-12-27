@@ -62,11 +62,34 @@ body {
     border: none !important;
 }
 
+/* Botón de las 3 rayas (Sidebar Toggle) */
+[data-widget="pushmenu"],
+.nav-link[data-widget="pushmenu"] {
+    background: transparent !important;
+    color: white !important;
+    border-radius: 8px !important;
+}
+
+[data-widget="pushmenu"]:hover,
+.nav-link[data-widget="pushmenu"]:hover,
+[data-widget="pushmenu"]:focus {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
 /* Excepción para que el sidebar mantenga su color oscuro */
 .main-sidebar,
 .sidebar-dark-indigo,
 .sidebar-dark-primary {
     background: var(--sidebar-bg) !important;
+}
+
+/* Logo (ALT / Sistema) */
+.brand-link,
+.main-sidebar .brand-link {
+    background: var(--header-bg) !important;
+    /* Mismo color que el cabezal */
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 /* Re-asegurar que el texto del logo sea blanco */
