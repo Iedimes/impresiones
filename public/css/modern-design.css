@@ -1,15 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
-    --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    --primary-gradient: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+    --secondary-gradient: linear-gradient(135deg, #c084fc 0%, #9333ea 100%);
+    --success-gradient: linear-gradient(135deg, #34d399 0%, #059669 100%);
+    --danger-gradient: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+    --sidebar-bg: #1e1b4b;
+    /* Night Indigo */
+    --header-bg: linear-gradient(90deg, #4338ca 0%, #6366f1 100%);
+    /* Modern Gradient Header */
     --surface-card: #ffffff;
-    --background: #f8fafc;
+    --background: #f1f5f9;
     --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --border-radius: 12px;
+    --text-secondary: #475569;
+    --border-radius: 16px;
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -19,8 +23,8 @@ body {
     font-family: 'Outfit', sans-serif !important;
     background-color: var(--background) !important;
     color: var(--text-primary);
-    font-size: 1.25rem !important;
-    /* Even larger base font */
+    font-size: 1.5rem !important;
+    /* Maximum readability */
 }
 
 /* Customizing AdminLTE Layout */
@@ -39,10 +43,55 @@ body {
     border-right: none !important;
 }
 
-/* Glassmorphism effect for sidebar */
-.sidebar-dark-primary {
-    background: #0f172a !important;
-    /* Night sky color */
+/* Sidebar and Header Modern Colors - FORCED */
+.main-header.navbar,
+.main-header.navbar-indigo,
+.main-header.navbar-dark,
+.main-header,
+nav.main-header.navbar.navbar-expand {
+    background: var(--header-bg) !important;
+    background-image: var(--header-bg) !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(67, 56, 202, 0.2) !important;
+}
+
+/* User Panel (logueado) and Sidebar Area */
+.user-panel,
+.sidebar {
+    background: transparent !important;
+}
+
+.main-sidebar,
+.sidebar-dark-indigo {
+    background: var(--sidebar-bg) !important;
+}
+
+.brand-link {
+    background: rgba(0, 0, 0, 0.1) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 1rem !important;
+}
+
+.brand-link .brand-text {
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+/* Specific fix for the 'logueado' (user name) area font and background */
+.navbar-nav>li>a.nav-link,
+.navbar-nav>li>a {
+    color: white !important;
+    font-weight: 500 !important;
+    font-size: 1.1rem !important;
+}
+
+
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: white !important;
 }
 
 /* Card Styling */
@@ -152,7 +201,7 @@ label {
     padding: 1.25rem 1rem !important;
     vertical-align: middle !important;
     border-top: 1px solid #f1f5f9 !important;
-    font-size: 1.2rem !important;
+    font-size: 1.45rem !important;
     /* Even larger table text */
 }
 
@@ -161,7 +210,7 @@ label {
     background: var(--surface-card) !important;
     border-radius: var(--border-radius) !important;
     box-shadow: var(--shadow-lg) !important;
-    padding: 2.5rem !important;
+    padding: 3rem !important;
     border: none !important;
     margin-top: 1rem;
 }
@@ -170,29 +219,30 @@ label {
     margin-top: 2rem !important;
     margin-bottom: 2rem !important;
     background: #f8fafc;
-    padding: 2rem !important;
-    border-radius: 12px;
+    padding: 2.5rem !important;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
 }
 
 .invoice-col strong {
-    font-size: 1.3rem !important;
-    color: #4338ca;
+    font-size: 1.5rem !important;
+    color: var(--header-bg);
     display: block;
     margin-bottom: 1rem;
-    border-bottom: 2px solid #e2e8f0;
+    border-bottom: 3px solid #818cf8;
     padding-bottom: 0.5rem;
 }
 
 .invoice address {
-    font-size: 1.15rem !important;
+    font-size: 1.3rem !important;
     line-height: 1.8;
 }
 
 .page-header {
-    border-bottom: 2px solid #f1f5f9 !important;
+    border-bottom: 3px solid #f1f5f9 !important;
     padding-bottom: 1rem !important;
     color: var(--text-primary) !important;
-    font-size: 2rem !important;
+    font-size: 2.2rem !important;
     font-weight: 700 !important;
 }
 
