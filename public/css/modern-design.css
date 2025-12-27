@@ -43,38 +43,38 @@ body {
     border-right: none !important;
 }
 
-/* Sidebar and Header Modern Colors - FORCED */
-.main-header.navbar,
-.main-header.navbar-indigo,
-.main-header.navbar-dark,
+/* ELIMINACIÓN AGRESIVA DE CUALQUIER RASTRO DE AZUL/TEAL */
 .main-header,
-nav.main-header.navbar.navbar-expand {
+.main-header.navbar,
+.main-header.navbar.navbar-expand,
+.brand-link,
+.main-sidebar .brand-link,
+.navbar-primary,
+.navbar-info,
+.navbar-indigo,
+.bg-primary,
+.bg-info,
+.bg-indigo,
+[class*='navbar-'],
+[class*='bg-'] {
     background: var(--header-bg) !important;
     background-image: var(--header-bg) !important;
     border: none !important;
-    box-shadow: 0 4px 12px rgba(67, 56, 202, 0.2) !important;
 }
 
-/* User Panel (logueado) and Sidebar Area */
-.user-panel,
-.sidebar {
-    background: transparent !important;
-}
-
+/* Excepción para que el sidebar mantenga su color oscuro */
 .main-sidebar,
-.sidebar-dark-indigo {
+.sidebar-dark-indigo,
+.sidebar-dark-primary {
     background: var(--sidebar-bg) !important;
 }
 
-.brand-link {
-    background: rgba(0, 0, 0, 0.1) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-    padding: 1rem !important;
-}
-
-.brand-link .brand-text {
+/* Re-asegurar que el texto del logo sea blanco */
+.brand-link .brand-text,
+.brand-link i {
     color: white !important;
     font-weight: 700 !important;
+    font-size: 1.3rem !important;
 }
 
 /* Specific fix for the 'logueado' (user name) area font and background */
