@@ -10,21 +10,18 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 
-# Ignorar archivos dentro de estas carpetas, pero mantener la carpeta en sí
-impresionys/storage/ama/impresion/*
-!impresionys/storage/ama/impresion/.gitignore
+# Ignorar documentos generados
+storage/*/impresion/*.pdf
+storage/*/impresion/*.docx
+storage/*/impresion/*.zip
+storage/*/impresion/*.png
 
-impresionys/storage/chetapyi/impresion/*
-!impresionys/storage/chetapyi/impresion/.gitignore
+# Mantener las carpetas pero vacías
+!storage/*/impresion/.gitignore
 
-impresionys/storage/fonavis/impresion/*
-!impresionys/storage/fonavis/impresion/.gitignore
-
-impresionys/storage/sanfrancisco/impresion/*
-!impresionys/storage/sanfrancisco/impresion/.gitignore
-
-impresionys/storage/sembrando/impresion/*
-!impresionys/storage/sembrando/impresion/.gitignore
-
-impresionys/storage/vyarenda/impresion/*
-!impresionys/storage/vyarenda/impresion/.gitignore
+# Archivos de sistema y log
+.vscode/
+/storage/logs/*.log
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/cache/*
