@@ -23,10 +23,10 @@ Auth::routes([
  ]);
  Route::get('/home', 'HomeController@index')->name('home');
 
- Route::resource('photos', 'PhotoController');
- Route::get('pre/{cedula}', 'PhotoController@index');
 
- //Route::get('/photos', 'PhotoController@index')->name('home');
+
+
+
 
  Route::post('/filtros', 'HomeController@index');
  Route::get('/filtros', 'HomeController@index');

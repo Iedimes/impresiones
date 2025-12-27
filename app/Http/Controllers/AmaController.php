@@ -69,28 +69,17 @@ class AmaController extends Controller
             $templateProcessor->setValue('CAMPO12', 'C.I. Nº '.$cedula);
         }
 
-        if ($postulante->CerCoCI == 0 && strlen(trim($postulante->CerCoNo)) == 0 ) {
+        $conyugeCI = (int)trim($postulante->CerCoCI);
+        $conyugeNom = trim($postulante->CerCoNo);
 
+        if ($conyugeCI == 0 || $conyugeNom == "" || $conyugeNom == "0") {
             $templateProcessor->setValue('CAMPO33', '');
-            //$templateProcessor->setValue('CAMPO33b', '');
-
         } else {
-
-            if(strlen(trim($postulante->CerCoNo)) != 0  && ($postulante->CerCoCI == 0 || $postulante->CerCoCI == null)){
-            $templateProcessor->setValue('CAMPO33', "y su cónyuge ".rtrim($postulante->CerCoNo));
-            }
-            if ($postulante->CerCoCI <= 150000 ) {
-                //$templateProcessor->setValue('CAMPO33', 'y su cónyuge (pareja) '.$postulante->CerCoNo.', con C.I./CARNET Nº '.$postulante->CerCoCI);
+            $cedulaconyuge = number_format($conyugeCI, 0, '.', '.');
+            if ($conyugeCI <= 150000) {
+                $templateProcessor->setValue('CAMPO33', "y su cónyuge " . rtrim($postulante->CerCoNo) . ", con C.I./CARNET Nº " . $cedulaconyuge);
             } else {
-                if ($postulante->CerTDCge == 'C') {
-                    $cedulaconyuge = number_format((int)$postulante->CerCoCI,0,'.','.');
-                    $templateProcessor->setValue('CAMPO33', "y su cónyuge ".rtrim($postulante->CerCoNo).", con C.I. Nº ".$cedulaconyuge/*.', con C.I. Nº '.$postulante->CerCoCI*/);
-                }else{
-                    $templateProcessor->setValue('CAMPO33', "y su cónyuge ".rtrim($postulante->CerCoNo).", con Documento Nº ".trim($postulante->CerCoCI));
-                }
-
-            //$templateProcessor->setValue('CAMPO33b', ", con C.I. Nº ".$cedulaconyuge);
-                //$campo33=print_r('y su cónyuge (pareja) '.$postulante->CerCoNo.', con C.I. Nº '.$postulante->CerCoCI,true);
+                $templateProcessor->setValue('CAMPO33', "y su cónyuge " . rtrim($postulante->CerCoNo) . ", con C.I. Nº " . $cedulaconyuge);
             }
         }
         //$templateProcessor->setValue('CAMPO33', $campo33);

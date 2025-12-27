@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Adldap\Laravel\Facades\Adldap;
+use LdapRecord\Container;
+use App\Ldap\User as LdapUser;
 
 class LoginController extends Controller
 {
@@ -23,7 +24,7 @@ class LoginController extends Controller
 
     public function username()
     {
-        return config('ldap_auth.usernames.eloquent');
+        return config('ldap_auth.usernames.eloquent', 'username');
     }
 
     protected function validateLogin(Request $request)
@@ -40,101 +41,62 @@ class LoginController extends Controller
         $username = $credentials[$this->username()];
         $password = $credentials['password'];
 
-        $user_format = env('LDAP_USER_FORMAT', 'cn=%s,'.env('LDAP_BASE_DN', ''));
-        $userdn = sprintf($user_format, $username);
+        // Logic from old controller: append @muvh for auth attempt
+        $authUsername = $username . '@muvh';
 
-        // you might need this, as reported in
-        // [#14](https://github.com/jotaelesalinas/laravel-simple-ldap-auth/issues/14):
-        // Adldap::auth()->bind($userdn, $password);
+        try {
+            $connection = Container::getConnection('default');
 
-        if(Adldap::auth()->attempt($username.'@muvh', $password, $bindAsUser = true)) {
+            if ($connection->auth()->attempt($authUsername, $password, true)) {
 
+                // Auth successful, finding local user
+                $user = \App\User::where($this->username(), $username)->first();
 
-            $user = \App\User::where($this->username(), $username)->first();
-            if (!$user) {
+                if (!$user) {
+                    // Create new user if not exists
+                    $user = new \App\User();
+                    $user->{$this->username()} = $username;
+                    $user->password = ''; // No password for LDAP users locally
 
-                $user = new \App\User();
-                $user->username = $username;
-                $user->password = '';
-
-                $sync_attrs = $this->retrieveSyncAttributes($username);
-                foreach ($sync_attrs as $field => $value) {
-                    $user->$field = $value !== null ? $value : '';
+                    $this->syncAttributes($user, $username);
+                    $user->save();
                 }
-            }
 
-            $this->guard()->login($user, true);
-            return true;
+                $this->guard()->login($user, true);
+                return true;
+            }
+        } catch (\Exception $e) {
+            \Log::error("LDAP Error: " . $e->getMessage());
         }
 
-        // the user doesn't exist in the LDAP server or the password is wrong
-        // log error
         return false;
     }
 
-    protected function retrieveSyncAttributes($username)
+    protected function syncAttributes(\App\User $user, $username)
     {
-        $ldapuser = Adldap::search()->where(env('LDAP_USER_ATTRIBUTE'), '=', $username)->first();
-        if ( !$ldapuser ) {
-            // log error
-            return false;
+        // Search for the user in LDAP to get attributes
+        $attribute = env('LDAP_USER_ATTRIBUTE', 'samaccountname');
+
+        try {
+            // Buscamos el usuario en LDAP usando el atributo configurado
+            $ldapUser = LdapUser::query()->where($attribute, '=', $username)->first();
+
+            if ($ldapUser) {
+                // Sync attributes defined in old config
+                // 'email' => 'userprincipalname', 'name' => 'displayName'
+
+                $val = $ldapUser->getFirstAttribute('userprincipalname');
+                if($val) $user->email = $val;
+
+                $valName = $ldapUser->getFirstAttribute('displayName');
+                if($valName) $user->name = $valName;
+
+            }
+        } catch (\Exception $e) {
+            \Log::error("LDAP Sync Error: " . $e->getMessage());
         }
-        // if you want to see the list of available attributes in your specific LDAP server:
-        // var_dump($ldapuser->attributes); exit;
-
-        // needed if any attribute is not directly accessible via a method call.
-        // attributes in \Adldap\Models\User are protected, so we will need
-        // to retrieve them using reflection.
-        $ldapuser_attrs = null;
-
-        $attrs = [];
-
-        foreach (config('ldap_auth.sync_attributes') as $local_attr => $ldap_attr) {
-            if ( $local_attr == 'username' ) {
-                continue;
-            }
-
-            $method = 'get' . $ldap_attr;
-            if (method_exists($ldapuser, $method)) {
-                $attrs[$local_attr] = $ldapuser->$method();
-                continue;
-            }
-
-            if ($ldapuser_attrs === null) {
-                $ldapuser_attrs = self::accessProtected($ldapuser, 'attributes');
-            }
-
-            if (!isset($ldapuser_attrs[$ldap_attr])) {
-                // an exception could be thrown
-                $attrs[$local_attr] = null;
-                continue;
-            }
-
-            if (!is_array($ldapuser_attrs[$ldap_attr])) {
-                $attrs[$local_attr] = $ldapuser_attrs[$ldap_attr];
-            }
-
-            if (count($ldapuser_attrs[$ldap_attr]) == 0) {
-                // an exception could be thrown
-                $attrs[$local_attr] = null;
-                continue;
-            }
-
-            // now it returns the first item, but it could return
-            // a comma-separated string or any other thing that suits you better
-            $attrs[$local_attr] = $ldapuser_attrs[$ldap_attr][0];
-            //$attrs[$local_attr] = implode(',', $ldapuser_attrs[$ldap_attr]);
-        }
-
-        return $attrs;
     }
 
-    protected static function accessProtected ($obj, $prop)
-    {
-        $reflection = new \ReflectionClass($obj);
-        $property = $reflection->getProperty($prop);
-        $property->setAccessible(true);
-        return $property->getValue($obj);
-    }
-
+    // Método auxiliar accedido por AuthenticatesUsers para la respuesta
+    // Lo mantenemos vacío o default por ahora ya que attemptLogin maneja el login
 }
