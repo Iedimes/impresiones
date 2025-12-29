@@ -305,14 +305,9 @@ return [
     'menu' => [
         'Menu',
         [
-            'text' => 'Blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
             'text'        => 'Inicio',
-            'url'         => 'home/0/0/2010-01-01/',
-            'icon'        => 'file',
+            'url'         => 'home',
+            'icon'        => 'fas fa-home',
         ],
     ],
 

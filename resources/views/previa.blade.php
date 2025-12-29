@@ -1,5 +1,7 @@
 @extends('adminlte::page')
 
+@section('body_class', 'sidebar-mini sidebar-collapse sidebar-closed')
+
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/modern-design.css') }}">
 @stop
