@@ -127,6 +127,15 @@
 @section('js')
     <script>
         $(document).ready(function() {
+            // Force sidebar collapse
+            if (!$('body').hasClass('sidebar-collapse')) {
+                $('body').addClass('sidebar-collapse');
+                $('body').addClass('sidebar-closed');
+            }
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem('remember_adminlte_sidebar', 'sidebar-collapse');
+            }
+
             $("#show").click(function() {
                 setTimeout(
                     function() {
