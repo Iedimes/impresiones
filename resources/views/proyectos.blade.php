@@ -1,7 +1,3 @@
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/modern-design.css') }}">
-@stop
-
 <div class="card card-primary card-outline">
     <div class="card-body">
         <div class="row">
@@ -36,8 +32,7 @@
                         </select>
                     </div>
                     <div class="mt-2">
-                        <span class="badge badge-info p-2"
-                            style="background-color: #6366f1; color: white; border-radius: 6px; font-size: 1.1rem; font-weight: 500;">
+                        <span style="color: var(--text-secondary); font-size: 1.2rem; font-weight: 500;">
                             <i class="fa fa-layer-group"></i> Total:
                             {{ number_format($projects->total(), 0, '.', '.') }}
                         </span>

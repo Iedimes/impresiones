@@ -5,200 +5,170 @@
     --secondary-gradient: linear-gradient(135deg, #c084fc 0%, #9333ea 100%);
     --success-gradient: linear-gradient(135deg, #34d399 0%, #059669 100%);
     --danger-gradient: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
-    --sidebar-bg: #1e1b4b;
-    /* Night Indigo */
-    --header-bg: linear-gradient(90deg, #4338ca 0%, #6366f1 100%);
-    /* Modern Gradient Header */
+    --dark-theme-bg: #222d32;
+    /* Classic AdminLTE 2 Dark Sidebar Color */
     --surface-card: #ffffff;
-    --background: #f1f5f9;
+    --background: #f4f7f6;
     --text-primary: #1e293b;
     --text-secondary: #475569;
-    --border-radius: 16px;
-    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --border-radius: 12px;
 }
 
+/* GLOBAL BASE */
 body {
     font-family: 'Outfit', sans-serif !important;
     background-color: var(--background) !important;
     color: var(--text-primary);
     font-size: 1.5rem !important;
-    /* Maximum readability */
 }
 
-/* Customizing AdminLTE Layout */
-.content-wrapper {
-    background-color: var(--background) !important;
-    padding: 1.5rem !important;
-}
-
-.main-header {
-    border-bottom: none !important;
-    box-shadow: var(--shadow-sm) !important;
-}
-
-.main-sidebar {
-    box-shadow: var(--shadow-lg) !important;
-    border-right: none !important;
-}
-
-/* ELIMINACIÓN AGRESIVA DE CUALQUIER RASTRO DE AZUL/TEAL */
+/* ADMINLTE 2 - FORCED DARK HEADER AND LOGO (SISTEMA DE IMPRESIÓN) */
 .main-header,
-.main-header.navbar,
-.main-header.navbar.navbar-expand,
-.brand-link,
-.main-sidebar .brand-link,
-.navbar-primary,
-.navbar-info,
-.navbar-indigo,
-.bg-primary,
-.bg-info,
-.bg-indigo,
-[class*='navbar-'],
-[class*='bg-'] {
-    background: var(--header-bg) !important;
-    background-image: var(--header-bg) !important;
+.main-header .logo,
+.main-header .navbar,
+.main-header .navbar .sidebar-toggle,
+.main-header .navbar-static-top,
+.logo,
+.logo-lg,
+.logo-mini {
+    background-color: var(--dark-theme-bg) !important;
+    background: var(--dark-theme-bg) !important;
+    background-image: none !important;
     border: none !important;
-}
-
-/* Botón de las 3 rayas (Sidebar Toggle) */
-[data-widget="pushmenu"],
-.nav-link[data-widget="pushmenu"] {
-    background: transparent !important;
     color: white !important;
-    border-radius: 8px !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
 }
 
-[data-widget="pushmenu"]:hover,
-.nav-link[data-widget="pushmenu"]:hover,
-[data-widget="pushmenu"]:focus {
-    background: rgba(255, 255, 255, 0.1) !important;
-    color: white !important;
+/* NO UNDERLINES IN ENTIRE HEADER */
+.main-header *,
+.logo * {
+    text-decoration: none !important;
+    border-bottom: none !important;
 }
 
-/* Excepción para que el sidebar mantenga su color oscuro */
-.main-sidebar,
-.sidebar-dark-indigo,
-.sidebar-dark-primary {
-    background: var(--sidebar-bg) !important;
+/* HOVER SIDEBAR TOGGLE */
+.main-header .navbar .sidebar-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Logo (ALT / Sistema) */
-.brand-link,
-.main-sidebar .brand-link {
-    background: var(--header-bg) !important;
-    /* Mismo color que el cabezal */
-    border-bottom: 2px solid rgba(255, 255, 255, 0.05) !important;
-}
-
-/* Re-asegurar que el texto del logo sea blanco */
-.brand-link .brand-text,
-.brand-link i {
-    color: white !important;
-    font-weight: 700 !important;
-    font-size: 1.3rem !important;
-}
-
-/* Specific fix for the 'logueado' (user name) area font and background */
-.navbar-nav>li>a.nav-link,
-.navbar-nav>li>a {
-    color: white !important;
-    font-weight: 500 !important;
-    font-size: 1.1rem !important;
-}
-
-
-.navbar-nav .nav-link {
-    color: rgba(255, 255, 255, 0.9) !important;
-}
-
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link:focus,
-.brand-link:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
+.main-header .navbar .nav-link {
     color: white !important;
 }
 
-/* Forzar que el logo (ALT) use el gradiente y no el color sólido */
-.main-sidebar .brand-link {
-    background: var(--header-bg) !important;
-}
-
-
-/* Card Styling */
+/* CARDS & BOXES - NO UNDERLINES / NO BORDERS */
 .card,
-.box {
+.box,
+.box-primary,
+.box-info,
+.card-primary,
+.card-info {
     border: none !important;
+    border-top: none !important;
     border-radius: var(--border-radius) !important;
-    box-shadow: var(--shadow-md) !important;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    background: white !important;
     margin-bottom: 2rem !important;
-}
-
-.card:hover,
-.box:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg) !important;
 }
 
 .card-header,
 .box-header {
     background: transparent !important;
-    border-bottom: 1px solid #f1f5f9 !important;
-    padding: 1.25rem 1.5rem !important;
-}
-
-.card-body,
-.box-body {
+    border: none !important;
+    /* NO UNDERLINE */
     padding: 1.5rem !important;
 }
 
-/* Modern Inputs */
-.form-control {
+/* TABLES SCALE - NO UNDERLINES / NO BORDERS */
+.table,
+.table thead th,
+.table tbody td {
+    border: none !important;
+    text-decoration: none !important;
+}
+
+.table thead th {
+    background-color: #f8fafc !important;
+    color: var(--text-secondary) !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    padding: 1.2rem !important;
+    text-transform: uppercase;
+}
+
+.table tbody td {
+    padding: 1.5rem 1.2rem !important;
+    font-size: 1.45rem !important;
+    vertical-align: middle !important;
+}
+
+.table tbody tr:hover {
+    background-color: #f8fafc !important;
+}
+
+/* PREVIEW PAGE (INVOICE) - NO UNDERLINES */
+.invoice {
+    background: white !important;
+    border-radius: 20px !important;
+    padding: 3rem !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+    border: none !important;
+}
+
+.invoice-info {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 2.5rem !important;
+    margin: 2rem 0 !important;
+    border: none !important;
+}
+
+.invoice-col strong {
+    font-size: 1.6rem !important;
+    color: var(--dark-theme-bg);
+    border: none !important;
+    /* NO UNDERLINE */
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.page-header {
+    border: none !important;
+    /* NO UNDERLINE */
+    padding-bottom: 1rem !important;
+    color: var(--text-primary) !important;
+    font-size: 2.2rem !important;
+    font-weight: 700 !important;
+}
+
+.invoice address {
+    font-size: 1.35rem !important;
+    line-height: 1.8;
+}
+
+/* BUTTONS */
+.btn {
     border-radius: 8px !important;
-    border: 1px solid #e2e8f0 !important;
-    padding: 0.6rem 1rem !important;
-    height: auto !important;
+    padding: 0.8rem 2rem !important;
+    font-weight: 600 !important;
+    border: none !important;
+    text-decoration: none !important;
     transition: all 0.2s ease !important;
 }
 
-.form-control:focus {
-    border-color: #6366f1 !important;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
-}
-
-label {
-    font-weight: 500 !important;
-    color: var(--text-secondary) !important;
-    margin-bottom: 0.5rem !important;
-    font-size: 0.9rem !important;
-}
-
-/* Buttons Transformation */
-.btn {
-    border-radius: 8px !important;
-    font-weight: 500 !important;
-    padding: 0.6rem 1.5rem !important;
-    text-transform: none !important;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border: none !important;
-    letter-spacing: 0.025em !important;
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
 }
 
 .btn-primary {
     background: var(--primary-gradient) !important;
-    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2) !important;
-}
-
-.btn-primary:hover {
-    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4) !important;
-    transform: translateY(-1px);
+    color: white !important;
 }
 
 .btn-success {
     background: var(--success-gradient) !important;
-    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2) !important;
+    color: white !important;
 }
 
 .btn-info {
@@ -206,199 +176,8 @@ label {
     color: white !important;
 }
 
-.btn-danger {
-    background: var(--danger-gradient) !important;
-}
-
-/* Table Design */
-.table {
-    border-collapse: separate !important;
-    border-spacing: 0 0px !important;
-}
-
-.table thead th {
-    background-color: #f8fafc !important;
-    border-top: none !important;
-    border-bottom: 2px solid #f1f5f9 !important;
-    color: var(--text-secondary) !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    font-size: 0.85rem !important;
-    /* Slightly larger headers */
-    letter-spacing: 0.05em !important;
-    padding: 1rem !important;
-}
-
-.table tbody td {
-    padding: 1.25rem 1rem !important;
-    vertical-align: middle !important;
-    border-top: 1px solid #f1f5f9 !important;
-    font-size: 1.45rem !important;
-    /* Even larger table text */
-}
-
-/* Invoice / Preview Page Styles */
-.invoice {
-    background: var(--surface-card) !important;
-    border-radius: var(--border-radius) !important;
-    box-shadow: var(--shadow-lg) !important;
-    padding: 3rem !important;
+/* TOTAL INFO DISPLAY */
+.mt-2 span {
+    text-decoration: none !important;
     border: none !important;
-    margin-top: 1rem;
-}
-
-.invoice-info {
-    margin-top: 2rem !important;
-    margin-bottom: 2rem !important;
-    background: #f8fafc;
-    padding: 2.5rem !important;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-}
-
-.invoice-col strong {
-    font-size: 1.5rem !important;
-    color: var(--header-bg);
-    display: block;
-    margin-bottom: 1rem;
-    border-bottom: 3px solid #818cf8;
-    padding-bottom: 0.5rem;
-}
-
-.invoice address {
-    font-size: 1.3rem !important;
-    line-height: 1.8;
-}
-
-.page-header {
-    border-bottom: 3px solid #f1f5f9 !important;
-    padding-bottom: 1rem !important;
-    color: var(--text-primary) !important;
-    font-size: 2.2rem !important;
-    font-weight: 700 !important;
-}
-
-.table tbody tr:hover {
-    background-color: #f1f5f9 !important;
-}
-
-/* Customizing the logo area */
-.brand-link {
-    background: #1e293b !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-    padding: 1rem !important;
-}
-
-.brand-text {
-    font-weight: 600 !important;
-    letter-spacing: -0.025em !important;
-}
-
-/* Pagination Styling */
-.pagination .page-item.active .page-link {
-    background: var(--primary-gradient) !important;
-    border: none !important;
-}
-
-.pagination .page-link {
-    border-radius: 6px !important;
-    margin: 0 2px !important;
-    border: none !important;
-    color: var(--text-secondary) !important;
-    font-weight: 500 !important;
-}
-
-/* Micro-animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.content-wrapper>section>.container-fluid {
-    animation: fadeIn 0.4s ease-out;
-}
-
-/* Search bar area improvements */
-.input-group-addon {
-    background-color: transparent !important;
-    border-right: none !important;
-    color: var(--text-secondary) !important;
-}
-
-/* Status Badges */
-.fa-check {
-    background: #ecfdf5;
-    color: #059669 !important;
-    padding: 6px;
-    border-radius: 50%;
-    font-size: 0.8rem !important;
-    width: 24px;
-    height: 24px;
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-}
-
-.fa-warning {
-    background: #fffbeb;
-    color: #d97706 !important;
-    padding: 6px;
-    border-radius: 50%;
-    font-size: 0.8rem !important;
-    width: 24px;
-    height: 24px;
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Row entrance animation */
-tbody tr {
-    animation: fadeIn 0.3s ease-out forwards;
-    opacity: 0;
-}
-
-tbody tr:nth-child(1) {
-    animation-delay: 0.05s;
-}
-
-tbody tr:nth-child(2) {
-    animation-delay: 0.1s;
-}
-
-tbody tr:nth-child(3) {
-    animation-delay: 0.15s;
-}
-
-tbody tr:nth-child(4) {
-    animation-delay: 0.2s;
-}
-
-tbody tr:nth-child(5) {
-    animation-delay: 0.25s;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f5f9;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
 }
