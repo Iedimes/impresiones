@@ -1,0 +1,286 @@
+/* Custom Admin Styles - Light & Minimal Theme */
+
+/* Cards */
+.card {
+    border: 1px solid #e9ecef !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    border-radius: 10px !important;
+    background-color: #fff !important;
+    transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header {
+    background-color: #fff !important;
+    border-bottom: 1px solid #e9ecef !important;
+    padding: 1rem 1.25rem !important;
+}
+
+.card-body {
+    background-color: #fff !important;
+}
+
+/* Tables - Force light theme */
+.table,
+.table-responsive,
+[data-bs-theme="dark"] .table {
+    background-color: #fff !important;
+    --tblr-table-bg: #fff !important;
+    --tblr-table-striped-bg: #fff !important;
+    --tblr-table-hover-bg: #f5f7ff !important;
+}
+
+.table thead th,
+[data-bs-theme="dark"] .table thead th {
+    background-color: #f8f9fa !important;
+    color: #495057 !important;
+    border-bottom: 2px solid #dee2e6 !important;
+    font-weight: 600 !important;
+    padding: 0.875rem 1rem !important;
+}
+
+.table tbody tr,
+.table-striped > tbody > tr:nth-of-type(odd) > *,
+.table-striped > tbody > tr:nth-of-type(even) > *,
+[data-bs-theme="dark"] .table tbody tr,
+[data-bs-theme="dark"] .table-striped > tbody > tr > * {
+    background-color: #fff !important;
+    color: #333 !important;
+    --tblr-table-accent-bg: #fff !important;
+}
+
+.table tbody tr:hover,
+.table tbody tr:hover > *,
+[data-bs-theme="dark"] .table tbody tr:hover > * {
+    background-color: #f5f7ff !important;
+    color: #333 !important;
+}
+
+.table tbody td,
+[data-bs-theme="dark"] .table tbody td {
+    padding: 0.75rem 1rem !important;
+    vertical-align: middle !important;
+    border-bottom: 1px solid #eee !important;
+    color: #333 !important;
+}
+
+.table tbody td a,
+[data-bs-theme="dark"] .table tbody td a {
+    color: #667eea !important;
+}
+
+/* Action buttons in table */
+.table .btn-link,
+[data-bs-theme="dark"] .table .btn-link {
+    text-decoration: none !important;
+    padding: 0.4rem 0.75rem !important;
+    border-radius: 6px !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Vista previa - Blue */
+.table .btn-link[href*="show"],
+.table .btn-link:has(i.la-eye),
+.table a[href*="/show"] {
+    background-color: #e8f4fc !important;
+    color: #0d6efd !important;
+    border: 1px solid #b6d4fe !important;
+}
+
+.table .btn-link[href*="show"]:hover,
+.table .btn-link:has(i.la-eye):hover,
+.table a[href*="/show"]:hover {
+    background-color: #0d6efd !important;
+    color: #fff !important;
+}
+
+/* Editar - Green */
+.table .btn-link[href*="edit"],
+.table .btn-link:has(i.la-edit),
+.table a[href*="/edit"] {
+    background-color: #e8f5e9 !important;
+    color: #198754 !important;
+    border: 1px solid #a3d9a5 !important;
+}
+
+.table .btn-link[href*="edit"]:hover,
+.table .btn-link:has(i.la-edit):hover,
+.table a[href*="/edit"]:hover {
+    background-color: #198754 !important;
+    color: #fff !important;
+}
+
+/* Eliminar - Red */
+.table .btn-link[data-button-type="delete"],
+.table .btn-link:has(i.la-trash),
+.table form button,
+.table a[data-button-type="delete"] {
+    background-color: #fce8e8 !important;
+    color: #dc3545 !important;
+    border: 1px solid #f5c2c7 !important;
+    padding: 0.4rem 0.75rem !important;
+    border-radius: 6px !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+}
+
+.table .btn-link[data-button-type="delete"]:hover,
+.table .btn-link:has(i.la-trash):hover,
+.table form button:hover,
+.table a[data-button-type="delete"]:hover {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #667eea !important;
+    border-color: #667eea !important;
+}
+
+.btn-primary:hover {
+    background-color: #5a6fd6 !important;
+    border-color: #5a6fd6 !important;
+}
+
+.btn-success {
+    background-color: #11998e !important;
+    border-color: #11998e !important;
+}
+
+.btn-success:hover {
+    background-color: #0d7d74 !important;
+    border-color: #0d7d74 !important;
+}
+
+.btn-danger {
+    background-color: #f5576c !important;
+    border-color: #f5576c !important;
+}
+
+.btn-danger:hover {
+    background-color: #e04458 !important;
+    border-color: #e04458 !important;
+}
+
+/* Forms - Light theme */
+.form-control,
+.form-select,
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+    background-color: #fff !important;
+    color: #333 !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 8px !important;
+    padding: 0.6rem 1rem !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+    background-color: #fff !important;
+    color: #333 !important;
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15) !important;
+}
+
+/* Labels */
+.form-label,
+label,
+[data-bs-theme="dark"] .form-label,
+[data-bs-theme="dark"] label {
+    color: #495057 !important;
+    font-weight: 500 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* Checkboxes and radios */
+.form-check-input,
+[data-bs-theme="dark"] .form-check-input {
+    background-color: #fff !important;
+    border: 2px solid #dee2e6 !important;
+}
+
+.form-check-input:checked,
+[data-bs-theme="dark"] .form-check-input:checked {
+    background-color: #667eea !important;
+    border-color: #667eea !important;
+}
+
+.form-check-label,
+[data-bs-theme="dark"] .form-check-label {
+    color: #333 !important;
+}
+
+/* Form groups */
+.mb-3,
+.form-group {
+    margin-bottom: 1.25rem !important;
+}
+
+/* Page body for forms */
+.page-body,
+[data-bs-theme="dark"] .page-body {
+    background-color: #f4f6f9 !important;
+}
+
+/* Box/Section styling for forms */
+.box,
+[data-bs-theme="dark"] .box {
+    background-color: #fff !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    padding: 1.5rem !important;
+}
+
+/* Required asterisk */
+.required,
+label .text-danger {
+    color: #dc3545 !important;
+}
+
+/* Pagination */
+.page-item.active .page-link {
+    background-color: #667eea !important;
+    border-color: #667eea !important;
+}
+
+.page-link {
+    color: #667eea !important;
+}
+
+.page-link:hover {
+    color: #5a6fd6 !important;
+}
+
+/* Badges */
+.badge {
+    padding: 0.4em 0.7em !important;
+    border-radius: 5px !important;
+    font-weight: 500 !important;
+}
+
+/* Action buttons in table */
+.table .btn-sm {
+    padding: 0.35rem 0.5rem !important;
+    border-radius: 5px !important;
+}
+
+/* DataTables */
+.dataTables_wrapper .dataTables_filter input {
+    border-radius: 6px !important;
+    border: 1px solid #dee2e6 !important;
+    padding: 0.4rem 0.75rem !important;
+}
+
+/* Sidebar active */
+.nav-link.active {
+    background-color: rgba(102, 126, 234, 0.1) !important;
+    color: #667eea !important;
+}
