@@ -7,6 +7,7 @@
 @endsection
 
 @section('content')
+    @if(backpack_auth()->check())
     <div class="row g-4">
         <!-- Users Card -->
         <div class="col-md-4">
@@ -74,4 +75,20 @@
             </div>
         </div>
     </div>
+    @else
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="la la-lock" style="font-size: 80px; color: #667eea;"></i>
+                    <h3 class="mt-3 text-dark">Acceso Restringido</h3>
+                    <p class="text-muted">Debes iniciar sesión para acceder al panel de administración.</p>
+                    <a href="{{ backpack_url('login') }}" class="btn btn-primary btn-lg mt-3">
+                        <i class="la la-sign-in-alt me-2"></i> Iniciar Sesión
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 @endsection
