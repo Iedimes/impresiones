@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 use ZipArchive;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-class VyarendaController extends Controller
+class VyaRendaController extends Controller
 {
 
     public function generateCodigo(){
