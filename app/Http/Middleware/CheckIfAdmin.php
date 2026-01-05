@@ -55,6 +55,13 @@ class CheckIfAdmin
      */
     public function handle($request, Closure $next)
     {
+        // Ensure this middleware only affects admin routes
+        // This prevents issues if the middleware is applied globally or on the wrong group
+        $routePrefix = config('backpack.base.route_prefix', 'admin');
+        if (! $request->is($routePrefix . '*') && ! $request->is($routePrefix)) {
+            return $next($request);
+        }
+
         if (backpack_auth()->guest()) {
             return $this->respondToUnauthorizedRequest($request);
         }
