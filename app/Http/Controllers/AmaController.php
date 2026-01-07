@@ -132,6 +132,10 @@ class AmaController extends Controller
         // Construir la URL completa
         $num = env('APP_URL') . '/verificacion/' . $postulante->CerPin;
 
+        if (!file_exists(storage_path("/ama/impresion/"))) {
+            mkdir(storage_path("/ama/impresion/"), 0755, true);
+        }
+
         // Generar el código QR
         QrCode::format('png')->size(200)->margin(0)->generate($num, storage_path("/ama/impresion/".trim($postulante->CerNro).".png"));
 
@@ -158,7 +162,7 @@ class AmaController extends Controller
         // clean up
         unset($word);
 
-        return response()->download(storage_path("/ama/impresion/".trim($postulante->CerNro).".pdf"));
+        return response()->download(storage_path("/ama/impresion/".trim($postulante->CerNro).".pdf"))->deleteFileAfterSend(true);
 
     }
 

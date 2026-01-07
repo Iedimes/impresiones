@@ -252,6 +252,10 @@ class FonavisController extends Controller
        // Construir la URL completa
         $num = env('APP_URL').'/verificacion/'.$postulante->CerPin;
 
+        if (!file_exists(storage_path("/fonavis/impresion/"))) {
+            mkdir(storage_path("/fonavis/impresion/"), 0755, true);
+        }
+
         // Generar el código QR
         QrCode::format('png')->size(110)->margin(0)->generate($num, storage_path("/fonavis/impresion/".$CerNro.".png"));
 
@@ -279,9 +283,9 @@ class FonavisController extends Controller
         unset($word);
 
         if ($tipo == 99) {
-            return response()->download(storage_path("/fonavis/impresion/".$CerNro.".docx"));
+            return response()->download(storage_path("/fonavis/impresion/".$CerNro.".docx"))->deleteFileAfterSend(true);
         }else{
-            return response()->download(storage_path("/fonavis/impresion/".$ext.substr(rtrim($postulante->CerNro), 5).'_'.$CerNro.".pdf"));
+            return response()->download(storage_path("/fonavis/impresion/".$ext.substr(rtrim($postulante->CerNro), 5).'_'.$CerNro.".pdf"))->deleteFileAfterSend(true);
         }
 
 
@@ -297,12 +301,11 @@ class FonavisController extends Controller
     $dt = new \DateTime($s);
     $date = $dt->format('Y-d-m H:i:s.v');
 
-    // CAMBIO CRÍTICO: Usar get() en lugar de paginate() para obtener TODOS los registros
     $projects = Subsidio::where('CerProg', $request->input('progid'))
         ->where('CerResNro', '=', $request->input('resid'))
         ->where('CerFeRe', '=', $date)
         ->orderBy(DB::raw('SUBSTRING(CerNro, 4, 15)'), 'asc')
-        ->get(); // CAMBIO AQUÍ
+        ->paginate(15);
 
     $time = time();
     $name = 'FONAVIS' . '-' . $request->input('resid') . '-' . $request->input('dateid') . '-' . $time . '.zip';
@@ -318,8 +321,13 @@ class FonavisController extends Controller
     try {
         $zipPath = storage_path("/fonavis/impresion/" . $name);
 
-        if (!is_writable(dirname($zipPath))) {
-            throw new \Exception('El directorio no es escribible.');
+        $directory = dirname($zipPath);
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        if (!is_writable($directory)) {
+            throw new \Exception('El directorio no es escribible: ' . $directory);
         }
 
         if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
@@ -382,7 +390,7 @@ class FonavisController extends Controller
             sleep(2);
             $this->limpiarArchivosTemporales($directorio = storage_path("/fonavis/impresion/"));
 
-            return response()->download($zipPath);
+            return response()->download($zipPath)->deleteFileAfterSend(true);
 
         } else {
             throw new \Exception('No se pudo crear el archivo ZIP.');
