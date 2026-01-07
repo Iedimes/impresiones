@@ -11,7 +11,7 @@ class User extends LdapUser
      *
      * @var array
      */
-    public static $objectClasses = [
+    public static array $objectClasses = [
         'top',
         'person',
         'organizationalperson',
@@ -23,5 +23,5 @@ class User extends LdapUser
      *
      * @var string
      */
-    protected $guidKey = 'objectguid';
+    protected string $guidKey = 'objectguid';
 }
