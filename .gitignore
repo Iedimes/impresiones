@@ -10,6 +10,12 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 
+# Ignorar assets compilados (se generan al correr npm run dev)
+/public/css/app.css
+/public/js/app.js
+/public/mix-manifest.json
+/public/service-worker.js
+
 # Ignorar documentos generados
 storage/*/impresion/*.pdf
 storage/*/impresion/*.docx
