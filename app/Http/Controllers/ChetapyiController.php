@@ -181,20 +181,24 @@ class ChetapyiController extends Controller
             $templateProcessor->setValue('CAMPO12', 'C.I. Nº '.$cedula);
         }
 
-        $conyugeCI = (int)trim($postulante->CerCoCI);
+        $conyugeCI = trim($postulante->CerCoCI);
         $conyugeNom = trim($postulante->CerCoNo);
+        $conyugeEsNumerico = $conyugeCI !== '' && is_numeric($conyugeCI);
 
-        if ($conyugeCI == 0 || $conyugeNom == "" || $conyugeNom == "0") {
+        if ($conyugeCI === '' || $conyugeCI === '0' || $conyugeNom === '' || $conyugeNom === '0') {
             $templateProcessor->setValue('CAMPO33', '');
         } else {
-            if ($conyugeCI <= 150000 ) {
-                $templateProcessor->setValue('CAMPO33', 'y su cónyuge (pareja) '.rtrim($postulante->CerCoNo).', con C.I./CARNET Nº '.number_format($conyugeCI,0,'.','.'));
+            if ($conyugeEsNumerico && (int)$conyugeCI <= 150000) {
+                $templateProcessor->setValue('CAMPO33', 'y su cónyuge (pareja) '.rtrim($conyugeNom).', con C.I./CARNET Nº '.number_format((int)$conyugeCI,0,'.','.'));
             } else {
-                $templateProcessor->setValue('CAMPO33', "y su cónyuge (pareja) ".rtrim($postulante->CerCoNo).', con C.I. Nº '.number_format($conyugeCI,0,'.','.'));
+                $templateProcessor->setValue('CAMPO33', 'y su cónyuge (pareja) '.rtrim($conyugeNom).', con C.I. Nº '.
+                    ($conyugeEsNumerico ? number_format((int)$conyugeCI,0,'.','.') : $conyugeCI)
+                );
             }
         }
-        $templateProcessor->setValue('CAMPO133', rtrim($postulante->CerCoNo));
-        $templateProcessor->setValue('CAMPO112', "C.I. Nº ".number_format((int)$postulante->CerCoCI,0,'.','.'));
+
+        $templateProcessor->setValue('CAMPO133', rtrim($conyugeNom));
+        $templateProcessor->setValue('CAMPO112', 'C.I. Nº '.($conyugeEsNumerico ? number_format((int)$conyugeCI,0,'.','.') : $conyugeCI));
         $templateProcessor->setValue('CAMPO14', $postulante->CerResNro);
         $templateProcessor->setValue('CAMPO22', number_format($postulante->CerUsm,2,',','.'));
         if ($postulante->CerTipViv == '') {
@@ -549,22 +553,24 @@ public function generateDocxMulti($id, $tipo)
     );
 
     // CAMPO33 - Cónyuge
-    $conyugeCI = (int)trim($postulante->CerCoCI);
+    $conyugeCI = trim($postulante->CerCoCI);
     $conyugeNom = trim($postulante->CerCoNo);
+    $conyugeEsNumerico = $conyugeCI !== '' && is_numeric($conyugeCI);
 
-    if ($conyugeCI == 0 || $conyugeNom == "" || $conyugeNom == "0") {
+    if ($conyugeCI === '' || $conyugeCI === '0' || $conyugeNom === '' || $conyugeNom === '0') {
         $templateProcessor->setValue('CAMPO33', '');
     } else {
-        if ($conyugeCI <= 150000) {
-            $templateProcessor->setValue('CAMPO33', 'y su cónyuge (pareja) '.rtrim($postulante->CerCoNo).', con C.I./CARNET Nº '.number_format($conyugeCI,0,'.','.'));
+        if ($conyugeEsNumerico && (int)$conyugeCI <= 150000) {
+            $templateProcessor->setValue('CAMPO33', 'y su cónyuge (pareja) '.rtrim($conyugeNom).', con C.I./CARNET Nº '.number_format((int)$conyugeCI,0,'.','.'));
         } else {
-            $templateProcessor->setValue('CAMPO33', "y su cónyuge (pareja) ".rtrim($postulante->CerCoNo).
-                ', con C.I. Nº '.number_format($conyugeCI, 0, '.', '.'));
+            $templateProcessor->setValue('CAMPO33', 'y su cónyuge (pareja) '.rtrim($conyugeNom).', con C.I. Nº '.
+                ($conyugeEsNumerico ? number_format((int)$conyugeCI,0,'.','.') : $conyugeCI)
+            );
         }
     }
 
-    $templateProcessor->setValue('CAMPO133', rtrim($postulante->CerCoNo));
-    $templateProcessor->setValue('CAMPO112', "C.I. Nº ".number_format((int)$postulante->CerCoCI, 0, '.', '.'));
+    $templateProcessor->setValue('CAMPO133', rtrim($conyugeNom));
+    $templateProcessor->setValue('CAMPO112', 'C.I. Nº '.($conyugeEsNumerico ? number_format((int)$conyugeCI,0,'.','.') : $conyugeCI));
     $templateProcessor->setValue('CAMPO14', $postulante->CerResNro);
     $templateProcessor->setValue('CAMPO22', number_format($postulante->CerUsm, 2, ',', '.'));
     $templateProcessor->setValue('CAMPO53', empty($postulante->CerTipViv) ? 'VR-2D' : $postulante->CerTipViv);
