@@ -63,6 +63,7 @@ class LoginController extends Controller
                 }
 
                 $this->guard()->login($user, true);
+                Auth::guard('backpack')->login($user, true);
                 return true;
             }
         } catch (\Exception $e) {

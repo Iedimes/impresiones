@@ -309,6 +309,27 @@ return [
             'url'         => 'home',
             'icon'        => 'fas fa-home',
         ],
+        [
+            'text'        => 'Admin',
+            'icon'        => 'fas fa-cogs',
+            'submenu' => [
+                [
+                    'text'        => 'Usuarios',
+                    'url'         => 'admin/user',
+                    'icon'        => 'fas fa-users',
+                ],
+                [
+                    'text'        => 'Roles',
+                    'url'         => 'admin/role',
+                    'icon'        => 'fas fa-id-badge',
+                ],
+                [
+                    'text'        => 'Permisos',
+                    'url'         => 'admin/permission',
+                    'icon'        => 'fas fa-key',
+                ],
+            ],
+        ],
     ],
 
     /*
