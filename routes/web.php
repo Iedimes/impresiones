@@ -36,6 +36,11 @@ Auth::routes([
  Route::get('previa/{id}/', 'HomeController@previaimpresion');
 
  Route::get('generatemasivo/', 'FonavisController@generateMasivo');
+ Route::get('generatemasivovyarenda/', 'VyaRendaController@generateMasivo');
+ Route::get('generatemasivochetapyi/', 'ChetapyiController@generateMasivo');
+ Route::get('generatemasivosembrando/', 'SembrandoController@generateMasivo');
+ Route::get('generatemasivoama/', 'AmaController@generateMasivo');
+ Route::get('generatemasivosanfrancisco/', 'SanFranciscoController@generateMasivo');
 
  Route::get('/verificacion/{key}/', 'HomeController@verificacion');
 

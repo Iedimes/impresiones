@@ -75,29 +75,127 @@
 </div>
 <div class="card card-info card-outline">
     <div class="card-header with-border">
-        @role('FONAVIS')
-            <a href="{!! action('FonavisController@generateMasivo', [
-                'progid' => $progid,
-                'resid' => $resid,
-                'dateid' => $dateid,
-                'cedula' => $cedula,
-                'page' => $page,
-                'idtipo' => '1',
-            ]) !!}">
-                <button class="btn btn-success" type="button"><i class="fa fa-print"></i> Generar Certificado </button>
-            </a>
-            <a href="{!! action('FonavisController@generateMasivo', [
-                'progid' => $progid,
-                'resid' => $resid,
-                'dateid' => $dateid,
-                'cedula' => $cedula,
-                'page' => $page,
-                'idtipo' => '2',
-            ]) !!}">
-                <button class="btn btn-info" type="button"><i class="fa fa-print"></i> Generar Recibo </button>
-            </a>
-        @else
-        @endrole
+        @if (!empty($progid) && !empty($resid) && !empty($dateid) && empty($cedula))
+        @if ($progid == 2)
+            @role('VYA RENDA|admin')
+                <a href="{!! action('VyaRendaController@generateMasivo', [
+                    'progid' => $progid,
+                    'resid' => $resid,
+                    'dateid' => $dateid,
+                    'cedula' => $cedula,
+                    'page' => $page,
+                    'idtipo' => '1',
+                ]) !!}">
+                    <button class="btn btn-success" type="button"><i class="fa fa-print"></i> Generar Resolucion 1304 </button>
+                </a>
+                <a href="{!! action('VyaRendaController@generateMasivo', [
+                    'progid' => $progid,
+                    'resid' => $resid,
+                    'dateid' => $dateid,
+                    'cedula' => $cedula,
+                    'page' => $page,
+                    'idtipo' => '3',
+                ]) !!}">
+                    <button class="btn btn-success" type="button"><i class="fa fa-print"></i> Generar Resolucion 1378 </button>
+                </a>
+                <a href="{!! action('VyaRendaController@generateMasivo', [
+                    'progid' => $progid,
+                    'resid' => $resid,
+                    'dateid' => $dateid,
+                    'cedula' => $cedula,
+                    'page' => $page,
+                    'idtipo' => '2',
+                ]) !!}">
+                    <button class="btn btn-info" type="button"><i class="fa fa-print"></i> Generar Recibo </button>
+                </a>
+            @endrole
+        @elseif ($progid == 1)
+            @role('FONAVIS|admin')
+                <a href="{!! action('FonavisController@generateMasivo', [
+                    'progid' => $progid,
+                    'resid' => $resid,
+                    'dateid' => $dateid,
+                    'cedula' => $cedula,
+                    'page' => $page,
+                    'idtipo' => '1',
+                ]) !!}">
+                    <button class="btn btn-success" type="button"><i class="fa fa-print"></i> Generar Certificado </button>
+                </a>
+                <a href="{!! action('FonavisController@generateMasivo', [
+                    'progid' => $progid,
+                    'resid' => $resid,
+                    'dateid' => $dateid,
+                    'cedula' => $cedula,
+                    'page' => $page,
+                    'idtipo' => '2',
+                ]) !!}">
+                    <button class="btn btn-info" type="button"><i class="fa fa-print"></i> Generar Recibo </button>
+                </a>
+            @endrole
+        @elseif ($progid == 3)
+            @role('CHE TAPYI|admin')
+                <a href="{!! action('ChetapyiController@generateMasivo', [
+                    'progid' => $progid,
+                    'resid' => $resid,
+                    'dateid' => $dateid,
+                    'cedula' => $cedula,
+                    'page' => $page,
+                    'idtipo' => '1',
+                ]) !!}">
+                    <button class="btn btn-success" type="button"><i class="fa fa-print"></i> Generar Certificado </button>
+                </a>
+                <a href="{!! action('ChetapyiController@generateMasivo', [
+                    'progid' => $progid,
+                    'resid' => $resid,
+                    'dateid' => $dateid,
+                    'cedula' => $cedula,
+                    'page' => $page,
+                    'idtipo' => '2',
+                ]) !!}">
+                    <button class="btn btn-info" type="button"><i class="fa fa-print"></i> Generar Recibo </button>
+                </a>
+            @endrole
+        @elseif ($progid == 4)
+            @role('SEMBRANDO|admin')
+                <a href="{!! action('SembrandoController@generateMasivo', [
+                    'progid' => $progid,
+                    'resid' => $resid,
+                    'dateid' => $dateid,
+                    'cedula' => $cedula,
+                    'page' => $page,
+                    'idtipo' => '1',
+                ]) !!}">
+                    <button class="btn btn-success" type="button"><i class="fa fa-print"></i> Generar Certificado </button>
+                </a>
+            @endrole
+        @elseif ($progid == 6)
+            @role('AMA|admin')
+                <a href="{!! action('AmaController@generateMasivo', [
+                    'progid' => $progid,
+                    'resid' => $resid,
+                    'dateid' => $dateid,
+                    'cedula' => $cedula,
+                    'page' => $page,
+                    'idtipo' => '1',
+                ]) !!}">
+                    <button class="btn btn-success" type="button"><i class="fa fa-print"></i> Generar Certificado </button>
+                </a>
+            @endrole
+        @elseif ($progid == 7)
+            @role('SAN FRANCISCO|admin')
+                <a href="{!! action('SanFranciscoController@generateMasivo', [
+                    'progid' => $progid,
+                    'resid' => $resid,
+                    'dateid' => $dateid,
+                    'cedula' => $cedula,
+                    'page' => $page,
+                    'idtipo' => '1',
+                ]) !!}">
+                    <button class="btn btn-success" type="button"><i class="fa fa-print"></i> Generar Certificado </button>
+                </a>
+            @endrole
+        @endif
+        @endif
         <div class="pull-right">{{ $projects->appends(request()->except('_token'))->links() }}</div>
     </div>
     <!-- /.card-header -->

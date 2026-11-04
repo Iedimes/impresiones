@@ -34,36 +34,39 @@ class VyaRendaController extends Controller
     {
 
         $postulante = Subsidio::where('CerNro', $id)->first();
-       // return ($postulante);
         $sat = Persona::where('PerCod', $postulante->CerNucCod)->first();
         $titular = Persona::where('PerCod', $postulante->CerPosCod)->first();
         $CerNro = $postulante->CerPosCod;
-        $CerNro = substr($CerNro, 0, strpos($CerNro, ' '));
+        $CerNro = substr($CerNro, 0, strpos($CerNro, ' ') ?: strlen($CerNro));
 
         $nombre = \Auth::user()->username;
+
         if ($tipo == 1) {
-            $ext="CS";
-            switch ($postulante->CerMod) {
-                case "VR":
-                        $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/vyarenda/template/vyarenda1304.docx'));
-                break;
-            }
-        }else{
-            $ext="RC";
-            $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/vyarenda/template/vyarendarecibo.docx'));
+            $ext = "CS";
+        } else {
+            $ext = "RC";
         }
 
-        if ($tipo == 3) {
+        // verifico modalidad y tipo
+        if ($tipo == 1) {
             switch ($postulante->CerMod) {
-        case "VR":
-            $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/vyarenda/template/vyarenda1378.docx'));
-        break;
-    default:
-        //echo "Your favorite color is neither red, blue, nor green!";
-        return "No existe platilla";
-        //$ext="CS";
-         }
-          }
+                case "VR":
+                    $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/vyarenda/template/vyarenda1304.docx'));
+                    break;
+                default:
+                    return "No existe platilla";
+            }
+        } elseif ($tipo == 3) {
+            switch ($postulante->CerMod) {
+                case "VR":
+                    $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/vyarenda/template/vyarenda1378.docx'));
+                    break;
+                default:
+                    return "No existe platilla";
+            }
+        } else {
+            $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('/vyarenda/template/vyarendarecibo.docx'));
+        }
 
 
         if ($postulante->CerPin == null || $postulante->CerPin == 0) {
@@ -87,10 +90,14 @@ class VyaRendaController extends Controller
             $postulante->save();
         }
 
-        if ($titular->PerSexo == 'M') {
-            $templateProcessor->setValue('CAMPO11', ' al Señor '.rtrim($postulante->CerposNom));
+        if (!isset($titular->PerSexo)) {
+            $templateProcessor->setValue('CAMPO11', ' al Señor/a '.rtrim($postulante->CerposNom));
         } else {
-            $templateProcessor->setValue('CAMPO11', ' a la Señora '.rtrim($postulante->CerposNom));
+            if ($titular->PerSexo == 'M') {
+                $templateProcessor->setValue('CAMPO11', ' al Señor '.rtrim($postulante->CerposNom));
+            } else {
+                $templateProcessor->setValue('CAMPO11', ' a la Señora '.rtrim($postulante->CerposNom));
+            }
         }
 
         $templateProcessor->setValue('CAMPO111', rtrim($postulante->CerposNom));
@@ -153,7 +160,7 @@ class VyaRendaController extends Controller
         $templateProcessor->setValue('CAMPO30', date('d/m/Y', strtotime($postulante->CerReLFe)));
 
         $templateProcessor->setValue('CAMPO25', trim($postulante->CerIdent));
-        $templateProcessor->setValue('CAMPO26', $postulante->CerNro);
+        $templateProcessor->setValue('CAMPO26', trim($postulante->CerNro));
         $cedula = number_format((int)$postulante->CerPosCod,0,'.','.');
         if ($postulante->CerPosCod <= 150000 ) {
             $templateProcessor->setValue('CAMPO12', 'C.I./CARNET Nº '.$cedula);
@@ -190,16 +197,16 @@ class VyaRendaController extends Controller
         }
         $ciudad = Localidad::find($postulante->CerCiuId);
         if ($postulante->CerCiuId == 0) {
-
+            $templateProcessor->setValue('CAMPO42', '');
         } else {
-            $templateProcessor->setValue('CAMPO42', $ciudad->CiuNom);
+            $templateProcessor->setValue('CAMPO42', $ciudad->CiuNom ?? '');
         }
 
         $depto = Departamento::find($postulante->CerDptoId);
         if ($postulante->CerDptoId == 0) {
-
+            $templateProcessor->setValue('CAMPO43', '');
         } else {
-            $templateProcessor->setValue('CAMPO43', trim($depto->DptoNom));
+            $templateProcessor->setValue('CAMPO43', trim($depto->DptoNom ?? ''));
         }
 
         //$ubicacion = ManLote::find($postulante->CerPosCod,$postulante->CerPryCod);
@@ -213,8 +220,8 @@ class VyaRendaController extends Controller
         ->where('CerNro', '=', $postulante->CerNro)
         ->first();
 
-    $templateProcessor->setValue('CAMPO9', $ubi->CerManz);
-    $templateProcessor->setValue('CAMPO08', $ubi->CerLote);
+        $templateProcessor->setValue('CAMPO9', $ubi->CerManz ?? '');
+        $templateProcessor->setValue('CAMPO08', $ubi->CerLote ?? '');
 
 
         if ($postulante->CerIndert == '') {
@@ -278,7 +285,7 @@ class VyaRendaController extends Controller
 
     $s = $request->input('dateid');
     $dt = new \DateTime($s);
-    $date = $dt->format('Y-m-d H:i:s.v');
+    $date = $dt->format('Y-d-m H:i:s.v');
 
     $projects = Subsidio::where('CerProg', $request->input('progid'))
         ->where('CerResNro', '=', $request->input('resid'))
@@ -516,7 +523,7 @@ public function generateDocxMulti($id, $tipo)
     $templateProcessor->setValue('CAMPO18', $postulante->CerReLla);
     $templateProcessor->setValue('CAMPO30', date('d/m/Y', strtotime($postulante->CerReLFe)));
     $templateProcessor->setValue('CAMPO25', trim($postulante->CerIdent));
-    $templateProcessor->setValue('CAMPO26', $postulante->CerNro);
+    $templateProcessor->setValue('CAMPO26', trim($postulante->CerNro));
 
     $cedula = number_format((int)$postulante->CerPosCod, 0, '.', '.');
     $templateProcessor->setValue('CAMPO12',
@@ -546,10 +553,10 @@ public function generateDocxMulti($id, $tipo)
     $templateProcessor->setValue('CAMPO54', ($postulante->CerSupViv <= 0) ? '43.50' : $postulante->CerSupViv);
 
     $ciudad = Localidad::find($postulante->CerCiuId);
-    $templateProcessor->setValue('CAMPO42', ($postulante->CerCiuId == 0) ? '' : $ciudad->CiuNom);
+    $templateProcessor->setValue('CAMPO42', ($postulante->CerCiuId == 0) ? '' : ($ciudad->CiuNom ?? ''));
 
     $depto = Departamento::find($postulante->CerDptoId);
-    $templateProcessor->setValue('CAMPO43', ($postulante->CerDptoId == 0) ? '' : trim($depto->DptoNom));
+    $templateProcessor->setValue('CAMPO43', ($postulante->CerDptoId == 0) ? '' : trim($depto->DptoNom ?? ''));
 
     // Ubicación
     $ubicacion = LoteManz::where('CerPosCod', $postulante->CerPosCod)
@@ -621,6 +628,49 @@ public function generateDocxMulti($id, $tipo)
 
         \Log::error("Word COM Error for ".$CerNro.": " . $e->getMessage());
         throw new \Exception("Error al convertir a PDF: " . $e->getMessage());
+    }
+}
+
+/**
+ * Limpiar archivos temporales del directorio de impresión
+ * Llamar después de generar el ZIP masivo
+ */
+public function limpiarTemporales()
+{
+    $directorio = storage_path("/vyarenda/impresion/");
+    $archivosEliminados = 0;
+    $errores = 0;
+
+    try {
+        // Obtener archivos .docx y .png
+        $archivos = array_merge(
+            glob($directorio . "*.docx"),
+            glob($directorio . "*.png")
+        );
+
+        foreach ($archivos as $archivo) {
+            // Esperar un momento por si está bloqueado
+            sleep(1);
+
+            if (@unlink($archivo)) {
+                $archivosEliminados++;
+            } else {
+                $errores++;
+                \Log::warning("No se pudo eliminar: " . basename($archivo));
+            }
+        }
+
+        \Log::info("Limpieza completada - Eliminados: $archivosEliminados, Errores: $errores");
+
+        return response()->json([
+            'success' => true,
+            'eliminados' => $archivosEliminados,
+            'errores' => $errores
+        ]);
+
+    } catch (\Exception $e) {
+        \Log::error("Error en limpieza: " . $e->getMessage());
+        return response()->json(['error' => $e->getMessage()], 500);
     }
 }
 

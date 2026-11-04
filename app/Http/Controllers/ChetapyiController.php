@@ -294,7 +294,7 @@ class ChetapyiController extends Controller
 
     $s = $request->input('dateid');
     $dt = new \DateTime($s);
-    $date = $dt->format('Y-m-d H:i:s.v');
+    $date = $dt->format('Y-d-m H:i:s.v');
 
     $projects = Subsidio::where('CerProg', $request->input('progid'))
         ->where('CerResNro', '=', $request->input('resid'))
@@ -569,10 +569,10 @@ public function generateDocxMulti($id, $tipo)
     $templateProcessor->setValue('CAMPO54', ($postulante->CerSupViv <= 0) ? '43.50' : $postulante->CerSupViv);
 
     $ciudad = Localidad::find($postulante->CerCiuId);
-    $templateProcessor->setValue('CAMPO42', ($postulante->CerCiuId == 0) ? '' : $ciudad->CiuNom);
+    $templateProcessor->setValue('CAMPO42', ($postulante->CerCiuId == 0) ? '' : ($ciudad->CiuNom ?? ''));
 
     $depto = Departamento::find($postulante->CerDptoId);
-    $templateProcessor->setValue('CAMPO43', ($postulante->CerDptoId == 0) ? '' : $depto->DptoNom);
+    $templateProcessor->setValue('CAMPO43', ($postulante->CerDptoId == 0) ? '' : ($depto->DptoNom ?? ''));
 
     // Ubicación
     $ubicacion = ManLote::where('SolPerCod', $postulante->CerPosCod)
