@@ -27,8 +27,7 @@ class CheckIfAdmin
      */
     private function checkIfUserIsAdmin($user)
     {
-        // return ($user->is_admin == 1);
-        return true;
+        return $user && $user->hasRole('admin');
     }
 
     /**
@@ -67,6 +66,7 @@ class CheckIfAdmin
         }
 
         if (! $this->checkIfUserIsAdmin(backpack_user())) {
+            backpack_auth()->logout();
             return $this->respondToUnauthorizedRequest($request);
         }
 

@@ -311,6 +311,7 @@ return [
         ],
         [
             'text'        => 'Admin',
+            'can'         => 'admin-access',
             'icon'        => 'fas fa-cogs',
             'submenu' => [
                 [

@@ -113,9 +113,9 @@
 
             <div class="row">
                 <div class="col-xs-4">
-                    <a href="{{ url('/admin/login') }}">
-                        <button class="btn btn-block btn-link">Acceso Admin</button>
-                    </a>
+
+
+
                 </div>
                 <div class="col-xs-4"></div>
                 <div class="col-xs-4">
